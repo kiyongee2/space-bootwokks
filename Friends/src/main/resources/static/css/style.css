@@ -1,0 +1,10 @@
+@charset "UTF-8";
+
+/* 공통 스타일 */
+#container{width: 80%; margin: 0 auto;}
+h2{border-bottom: 2px solid #ccc; padding: 16px;}
+
+/* index 스타일 */
+#main{text-align: center}
+.main-pic img{width: 40%; border-radius: 8px;}
+.menu{margin: 10px;}
