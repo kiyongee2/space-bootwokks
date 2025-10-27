@@ -1,5 +1,7 @@
 package com.springboot.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.springboot.dto.MemberDTO;
@@ -21,4 +23,23 @@ public class MemberService {
 		Member member = Member.toSaveEntity(dto);
 		repository.save(member);
 	}
+	
+	//회원 목록
+	public List<Member> findAll(){
+		return repository.findAll();
+	}
+	
+	//회원 정보
+	public Member findById(Long id) {
+		Member member = repository.findById(id).get();
+		return member;
+	}
 }
+
+
+
+
+
+
+
+

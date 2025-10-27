@@ -8,6 +8,7 @@ h2{
 	text-align: center;
 }
 ul li{list-style: none; margin: 10px;}
+table thead{background: #eee;}
 
 /* index 스타일 */
 #main{text-align: center}
@@ -18,6 +19,18 @@ ul li{list-style: none; margin: 10px;}
 .joinForm{width: 400px; margin: 0 auto;}
 .joinForm label{width: 80px; float: left;}
 
+/* memberList 스타일 */
+.memberList{
+	width: 600px;
+	margin: 20px auto;
+	border: 1px solid #ccc;
+	border-collapse: collapse;
+}
+.memberList th, td{
+	border: 1px solid #ccc;
+	padding: 5px 10px;
+}
+.home{width: 600px; margin: 0 auto;}
 
 
 
