@@ -34,7 +34,30 @@ public class MemberService {
 		Member member = repository.findById(id).get();
 		return member;
 	}
+	
+	//로그인 처리
+	public MemberDTO login(String email, String passwd) {
+		//DB의 이메일과 입력 폼의 이메일을 비교
+		Member member = repository.findByEmail(email)
+				.orElseThrow(() -> 
+				new IllegalArgumentException("존재하지 않는 이메일 입니다."));
+		
+		//비밀번호 체크
+		if(!member.getPasswd().equals(passwd)) {
+			throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+		}
+		
+		//entity를 dto로 저장
+		MemberDTO dto = new MemberDTO();
+		dto.setId(member.getId());
+		dto.setEmail(member.getEmail());
+		dto.setName(member.getName());
+		dto.setGender(member.getGender());
+		
+		return dto;
+	}
 }
+
 
 
 

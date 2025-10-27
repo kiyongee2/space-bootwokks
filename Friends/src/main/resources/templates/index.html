@@ -14,6 +14,12 @@
 			</div>
 			
 			<div class="menu">
+				<th:block th:if="${session.loginEmail}">
+					<a th:href="@{/members/logout}" th:text="로그아웃"></a> |
+				</th:block>
+				<th:block th:unless="${session.loginEmail}">
+					<a th:href="@{/members/login}" th:text="로그인"></a> |
+				</th:block>
 				<a th:href="@{/members/join}">회원 가입</a> |
 				<a th:href="@{/members}">회원 목록</a> 
 			</div>
@@ -21,3 +27,9 @@
 	</div>
 </body>
 </html>
+
+
+
+
+
+

@@ -9,11 +9,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.springboot.dto.MemberDTO;
 import com.springboot.entity.Member;
 import com.springboot.service.MemberService;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -58,7 +61,40 @@ public class MemberController {
 		return "member/info";
 	}
 	
+	//로그인 페이지
+	@GetMapping("/login")
+	public String loginForm() {
+		
+		return "member/login";
+	}
 	
+	//로그인 처리
+	@PostMapping("/login")
+	public String login(@RequestParam String email,
+			@RequestParam String passwd,
+			HttpSession session,
+			RedirectAttributes ra ) {
+		try {
+			//로그인 체크 메서드 호출
+			MemberDTO dto = service.login(email, passwd);
+			
+			//로그인 성공시 - 세션 발급
+			session.setAttribute("loginEmail", dto.getEmail());
+			return "redirect:/";
+		}catch(Exception e) {
+			//로그인 실패, RedirectAttributes는 redirect 상태에서 데이터 전송
+			ra.addFlashAttribute("error", e.getMessage());
+			return "redirect:/members/login";
+		}
+	}
+	
+	//로그아웃 처리
+	@GetMapping("/logout")
+	public String logout(HttpSession session) {
+		//세션 삭제
+		session.invalidate();
+		return "redirect:/";
+	}
 }
 
 
