@@ -78,8 +78,9 @@ public class MemberController {
 			//로그인 체크 메서드 호출
 			MemberDTO dto = service.login(email, passwd);
 			
-			//로그인 성공시 - 세션 발급
+			//로그인 성공시 - 세션 발급:이메일, 이름
 			session.setAttribute("loginEmail", dto.getEmail());
+			session.setAttribute("loginName", dto.getName());
 			return "redirect:/";
 		}catch(Exception e) {
 			//로그인 실패, RedirectAttributes는 redirect 상태에서 데이터 전송
