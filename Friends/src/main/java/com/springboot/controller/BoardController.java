@@ -33,6 +33,15 @@ public class BoardController {
 		return "board/list";
 	}
 	
+	//게시글 목록(페이지 처리)
+	@GetMapping("/pages")
+	public String getBoardPages(Model model) {
+		List<Board> boardList = service.findAll();
+		model.addAttribute("boardList", boardList); //리스트 보내기
+		return "board/pages";
+	}
+	
+	
 	//글 쓰기 페이지 
 	@GetMapping("/write")
 	public String writeForm() {
