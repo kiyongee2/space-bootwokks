@@ -63,6 +63,29 @@ public class BoardController {
 			return "error/errorPage";
 		}
 	}
+	
+	//글 삭제
+	@GetMapping("/delete/{id}")
+	public String deleteBoard(@PathVariable Long id) {
+		service.delete(id);
+		return "redirect:/boards";
+	}
+	
+	//글 수정 페이지
+	@GetMapping("/update/{id}")
+	public String updateForm(@PathVariable Long id,
+			Model model) {
+		Board board = service.findById(id); //해당 게시글 가져옴
+		model.addAttribute("board", board); //수정페이지로 보냄
+		return "board/update";
+	}
+	
+	//글 수정 처리
+	@PostMapping("/update")
+	public String updateBoard(BoardDTO dto) {
+		service.update(dto);
+		return "redirect:/boards/" + dto.getId();
+	}
 }
 
 

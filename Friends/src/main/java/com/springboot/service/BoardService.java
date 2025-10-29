@@ -39,9 +39,29 @@ public class BoardService {
 		return board;
 	}
 
+	//조회수 증가
 	@Transactional //트랜잭션(조회수, 상세보기 2개의 기능을 구현)
 	public void updateHits(Long id) {
 		repository.updateHits(id);
+	}
+
+	//글 삭제
+	public void delete(Long id) {
+		//제공된 deleteById() 사용
+		repository.deleteById(id);
+	}
+
+	//글 수정
+	public void update(BoardDTO dto) {
+		//id에 해당하는 게시글이 가져오기
+		Board board = repository.findById(dto.getId())
+				.orElseThrow(() -> 
+				new IllegalArgumentException("해당 글이 존재하지 않습니다."));
+		
+		//제목, 내용 수정
+		board.setTitle(dto.getTitle());
+		board.setContent(dto.getContent());
+		repository.save(board);  //수정후 다시 저장
 	}
 	
 }
