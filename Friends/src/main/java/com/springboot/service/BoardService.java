@@ -2,6 +2,10 @@ package com.springboot.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.springboot.dto.BoardDTO;
@@ -10,7 +14,9 @@ import com.springboot.repository.BoardRepository;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RequiredArgsConstructor  //생성자 주입(final 사용)
 @Service  //빈 등록
 public class BoardService {
@@ -62,6 +68,23 @@ public class BoardService {
 		board.setTitle(dto.getTitle());
 		board.setContent(dto.getContent());
 		repository.save(board);  //수정후 다시 저장
+	}
+
+	//글 목록(페이지 처리)
+	public Page<Board> findAll(Pageable pageable) {
+		//0-> 첫페이지, 10->페이지당 개수
+		//pageable = PageRequest.of(0, 10); //오름차순
+		int page = pageable.getPageNumber() - 1;
+		int pageSize = 10;
+		
+		log.info("pageable.getPageNumber(): " + pageable.getPageNumber());
+		
+		//http://localhost:8080/boards/pages?page=3 ->3페이지
+		pageable = PageRequest.of(page, pageSize, Sort.Direction.DESC, "id"); //내림차순
+		
+		
+		Page<Board> boardList = repository.findAll(pageable);
+		return boardList;
 	}
 	
 }

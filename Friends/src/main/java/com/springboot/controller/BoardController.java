@@ -2,6 +2,9 @@ package com.springboot.controller;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,9 +37,11 @@ public class BoardController {
 	}
 	
 	//게시글 목록(페이지 처리)
+	//http://localhost:8080/boards/pages?page=1 (기본 페이지)
 	@GetMapping("/pages")
-	public String getBoardPages(Model model) {
-		List<Board> boardList = service.findAll();
+	public String getBoardPages(Model model,
+			@PageableDefault(page=1) Pageable pageable) {
+		Page<Board> boardList = service.findAll(pageable);
 		model.addAttribute("boardList", boardList); //리스트 보내기
 		return "board/pages";
 	}
