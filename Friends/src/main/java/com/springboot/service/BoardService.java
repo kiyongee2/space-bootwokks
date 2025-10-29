@@ -80,6 +80,7 @@ public class BoardService {
 		log.info("pageable.getPageNumber(): " + pageable.getPageNumber());
 		
 		//http://localhost:8080/boards/pages?page=3 ->3페이지
+		//pageable = PageRequest.of(page, pageSize); //오름차순
 		pageable = PageRequest.of(page, pageSize, Sort.Direction.DESC, "id"); //내림차순
 		
 		

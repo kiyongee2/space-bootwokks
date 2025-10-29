@@ -8,14 +8,18 @@
 <body>
 	<div id="container">
 		<h2>글 목록</h2>
+		<!-- 검색 영역 -->
+		<form th:action="@{/boards/pages}" method="get"
+				class="searchForm">
+			<input type="text" name="keyword">
+			<input type="submit" value="검색">
+		</form>
+		
+		<!-- 글 목록 -->
 		<table class="boardList">
 			<thead>
 				<tr>
-					<th>번호</th>
-					<th>제목</th>
-					<th>글쓴이</th>
-					<th>조회수</th>
-					<th>작성일</th>
+					<th>번호</th><th>제목</th><th>글쓴이</th><th>조회수</th><th>작성일</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -33,6 +37,24 @@
 				</tr>
 			</tbody>
 		</table>
+		<!-- 페이지 영역 -->
+		<div class="pagination">
+			<!-- 이전 페이지  예) 2페이지 클릭, db는 1page
+			  boardList.number-> getNumber() : 현재 페이지 번호
+			-->
+			<a th:href="${boardList.first} ? '#' :  
+			    @{/boards/pages(page=${boardList.number})}" th:text="Prev"></a>
+			
+			<!-- 페이지 번호 블럭 -->
+			<span th:each="page : ${#numbers.sequence(startPage, endPage)}">
+				<a th:href="@{/boards/pages(page=${page})}" th:text="${page}"></a>
+			</span>
+		
+			<!-- 다음 페이지 -->
+			<a th:href="${boardList.last} ? '#' :  
+			    @{/boards/pages(page=${boardList.number + 2})}" th:text="Next"></a>
+		</div>
+		
 		<div class="btnWrite">
 		   <a th:href="@{/boards/write}">
 		   	<button>글쓰기</button>

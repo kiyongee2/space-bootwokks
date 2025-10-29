@@ -42,7 +42,35 @@ public class BoardController {
 	public String getBoardPages(Model model,
 			@PageableDefault(page=1) Pageable pageable) {
 		Page<Board> boardList = service.findAll(pageable);
+		
+		
+		//하단의 페이지 블럭
+		int blockLimit = 10; //1 2 3 ... 10 (10페이지까지 보이기)
+		//페이지 블럭의 시작 번호 -  1, 11, 21
+		//예)페이지 번호 - 13,  13/10=1.3-> 2(올림)-1 * 10 + 1 => 11 (11 ~ 20 블럭)
+		int startPage = 
+				((int)Math.ceil((double)pageable.getPageNumber() / blockLimit) - 1)
+				* blockLimit + 1;
+		
+		//페이지 블럭의 끝번호 - 10, 20, 30
+		//int endPage = startPage + blockLimit - 1  (
+		//
+		/*int endPage = (startPage + blockLimit - 1) > boardList.getTotalPages() ?
+				boardList.getTotalPages() : (startPage + blockLimit - 1);*/
+		
+		int endPage = Math.min(startPage + blockLimit - 1, boardList.getTotalPages());
+		
+		log.info("startPage: " + startPage);
+		log.info("pageable.getPageNumber(): " + pageable.getPageNumber());
+		log.info("endPage: " + endPage);
+		log.info("boardList.getTotalPages(): " + boardList.getTotalPages());
+		
+				
+		//모델 보내기
 		model.addAttribute("boardList", boardList); //리스트 보내기
+		model.addAttribute("startPage", startPage);
+		model.addAttribute("endPage", endPage);
+		
 		return "board/pages";
 	}
 	
