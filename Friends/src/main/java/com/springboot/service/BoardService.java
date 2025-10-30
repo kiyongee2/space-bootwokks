@@ -87,6 +87,31 @@ public class BoardService {
 		Page<Board> boardList = repository.findAll(pageable);
 		return boardList;
 	}
+    //글 제목 검색 및 페이지 처리
+	public Page<Board> findByTitleContaining(String keyword, Pageable pageable) {
+		int page = pageable.getPageNumber() - 1;
+		int pageSize = 10;
+			
+		pageable = PageRequest.of(page, pageSize, Sort.Direction.DESC, "id"); //내림차순
+		
+		Page<Board> boardList = 
+				repository.findByTitleContaining(keyword, pageable);
+		return boardList;
+	}
+
+	//글 내용 검색 및 페이지 처리
+	public Page<Board> findByContentContaining(String keyword, Pageable pageable) {
+		int page = pageable.getPageNumber() - 1;
+		int pageSize = 10;
+			
+		pageable = PageRequest.of(page, pageSize, Sort.Direction.DESC, "id"); //내림차순
+		
+		Page<Board> boardList = 
+				repository.findByContentContaining(keyword, pageable);
+		return boardList;
+	}
+
+
 	
 }
 

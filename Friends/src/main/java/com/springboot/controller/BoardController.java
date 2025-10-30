@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.springboot.dto.BoardDTO;
 import com.springboot.entity.Board;
@@ -36,13 +37,24 @@ public class BoardController {
 		return "board/list";
 	}
 	
-	//게시글 목록(페이지 처리)
+	//게시글 목록(페이지 처리 및 검색)
 	//http://localhost:8080/boards/pages?page=1 (기본 페이지)
 	@GetMapping("/pages")
-	public String getBoardPages(Model model,
-			@PageableDefault(page=1) Pageable pageable) {
-		Page<Board> boardList = service.findAll(pageable);
+	public String getBoardPages(
+			//키워드가 없어도 예외가 발생하지 않도록 required=false로 정함
+			@RequestParam(value="keyword", required=false) String keyword,
+			@RequestParam(value="type", required=false) String type,
+			@PageableDefault(page=1) Pageable pageable,
+			Model model) {
 		
+		Page<Board> boardList = null;
+		if(keyword == null) {
+			boardList = service.findAll(pageable); //일반 페이지 처리
+		}else if(keyword != null && type.equals("title")){
+			boardList = service.findByTitleContaining(keyword, pageable); //제목 검색어 처리
+		}else if(keyword != null && type.equals("content")){
+			boardList = service.findByContentContaining(keyword, pageable); //내용 검색어 처리
+		}
 		
 		//하단의 페이지 블럭
 		int blockLimit = 10; //1 2 3 ... 10 (10페이지까지 보이기)
@@ -65,11 +77,12 @@ public class BoardController {
 		log.info("endPage: " + endPage);
 		log.info("boardList.getTotalPages(): " + boardList.getTotalPages());
 		
-				
 		//모델 보내기
 		model.addAttribute("boardList", boardList); //리스트 보내기
 		model.addAttribute("startPage", startPage);
 		model.addAttribute("endPage", endPage);
+		model.addAttribute("kw", keyword); //검색어 보내기
+		model.addAttribute("type", type); //검색 유형
 		
 		return "board/pages";
 	}
@@ -86,7 +99,7 @@ public class BoardController {
 	public String write(@ModelAttribute BoardDTO dto) {
 		log.info("BoardDTO: " + dto);
 		service.save(dto);
-		return "redirect:/boards";
+		return "redirect:/boards/pages";
 	}
 	
 	//글 상세보기
@@ -101,7 +114,7 @@ public class BoardController {
 			//상세보기 호출
 			Board board = service.findById(id);  
 			model.addAttribute("board", board);
-			model.addAttribute("page", pageable.getPageNumber());
+			model.addAttribute("page", pageable.getPageNumber()); //페이지 보내기
 			return "board/detail";
 		}catch(Exception e) {
 			return "error/errorPage";
