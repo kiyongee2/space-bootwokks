@@ -92,6 +92,7 @@ public class BoardController {
 	//글 상세보기
 	@GetMapping("/{id}")
 	public String getBoard(@PathVariable Long id,
+			@PageableDefault(page=1) Pageable pageable,
 			Model model) {
 		try {
 			//조회수 증가
@@ -100,6 +101,7 @@ public class BoardController {
 			//상세보기 호출
 			Board board = service.findById(id);  
 			model.addAttribute("board", board);
+			model.addAttribute("page", pageable.getPageNumber());
 			return "board/detail";
 		}catch(Exception e) {
 			return "error/errorPage";

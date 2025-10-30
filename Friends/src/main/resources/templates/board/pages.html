@@ -29,7 +29,7 @@
 					    <!--  
 						<a th:href="@{/boards/{id}(id=${b.id})}" th:text="${b.title}"></a>
 						-->
-						<a th:href="@{|/boards/${b.id}|}" th:text="${b.title}"></a>
+						<a th:href="@{|/boards/${b.id}|(page=${boardList.number+1})}" th:text="${b.title}"></a>
 					</td>
 					<td th:text="${b.writer}"></td>
 					<td th:text="${b.hits}"></td>
