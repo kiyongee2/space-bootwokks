@@ -20,11 +20,12 @@
 				</th:block>
 				<th:block sec:authorize="isAuthenticated()">
 					[<span sec:authentication="principal.name"></span>]님 
-					<a th:href="@{/members/logout}" th:text="로그아웃"></a> |
+					<a th:href="@{/logout}" th:text="로그아웃"></a> |
 				</th:block>
 				<a th:href="@{/members/join}">회원 가입</a> |
 				<a th:href="@{/members}">회원 목록</a> |
-				<a th:href="@{/boards/pages}">게시판</a> 
+				<a th:href="@{/boards/pages}">게시판</a> |
+				<a th:href="@{/admin/dashboard}">관리자</a> 
 			</div>
 		</div>
 	</div>

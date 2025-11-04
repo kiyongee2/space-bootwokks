@@ -25,7 +25,7 @@ textarea{resize: none;}
 
 /* memberList 스타일 */
 .memberList, .boardList{
-	width: 600px;
+	width: 700px;
 	margin: 20px auto;
 	border: 1px solid #ccc;
 	border-collapse: collapse;
