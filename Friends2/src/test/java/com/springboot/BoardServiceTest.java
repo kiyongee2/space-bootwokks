@@ -13,7 +13,7 @@ public class BoardServiceTest {
 	@Autowired  //객체 생성(service)
 	private BoardService service;
 	
-	@Test
+	/*@Test
 	void testInsertData() {
 		for(int i = 1; i <= 123; i++) {
 			BoardDTO dto = new BoardDTO();
@@ -23,7 +23,7 @@ public class BoardServiceTest {
 			
 			service.save(dto);
 		}
-	}
+	}*/
 }
 
 

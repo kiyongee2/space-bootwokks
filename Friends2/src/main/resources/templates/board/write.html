@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+		xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
 <meta charset="UTF-8">
 <title>글쓰기</title>
@@ -7,15 +8,6 @@
 </head>
 <body>
 	<div id="container">
-		<!-- 세션이 없으면 로그인 요청(자바스크립트) -->
-		<script th:inline="javascript">
-			let loginEmail = [[${session.loginEmail}]]
-			if(!loginEmail){
-				alert("로그인이 필요합니다.");
-				location.href = "/members/login";
-			}
-		</script>
-	
 		<h2>글쓰기</h2>
 		<form th:action="@{/boards/write}" method="post"
 				th:object="${boardDTO}" class="writeForm">
@@ -34,8 +26,10 @@
 	    					th:field="*{content}" placeholder="내용"></textarea>
 	    			</li>
 	    			<li>
-	    				<input type="text" name="writer" size=62
-	    					  th:value="${session.loginName}">
+	    				<div sec:authorize="isAuthenticated()">
+		    				<input type="text" name="writer" size=62
+		    					  th:value="${#authentication.principal.name}">
+	    				</div>
 	    			</li>
 	    			<li>
 	    				<input type="submit" value="등록">

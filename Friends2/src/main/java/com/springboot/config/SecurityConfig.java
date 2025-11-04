@@ -39,7 +39,7 @@ public class SecurityConfig {
 					.requestMatchers("/", "/css/**", "/images/**",
 							"/members/join", "/boards/pages").permitAll() //해당 경로 접근 허용
 					//USER와 ADMIN 둘 모두 권한 허용
-					.requestMatchers("/members/**").hasAnyRole("USER", "ADMIN") 
+					.requestMatchers("/members/**", "/boards/**").hasAnyRole("USER", "ADMIN") 
 					.requestMatchers("/admin/**").hasRole("ADMIN") //ADMIN 권한 허용
 					.anyRequest().authenticated() //나머지는 인증 필요
 					

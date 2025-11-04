@@ -49,7 +49,7 @@ public class Member {
 		member.setPasswd(pwEncoder.encode(dto.getPasswd()));
 		member.setName(dto.getName());
 		member.setGender(dto.getGender());
-		member.setRole("ROLE_ADMIN");
+		member.setRole("ROLE_USER");
 		
 		return member;
 	}
