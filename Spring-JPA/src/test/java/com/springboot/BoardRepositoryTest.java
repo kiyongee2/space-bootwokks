@@ -20,23 +20,23 @@ public class BoardRepositoryTest {
 	private BoardRepository repository;
 	
 	//게시글 추가(등록)
-	@Test
+	/*@Test
 	public void insertBoard() {
-		/*Board board = new Board();
+		Board board = new Board();
 		//id, createDate는 자동 입력
 		board.setTitle("가입 인사");
 		board.setWriter("박신입");
 		board.setContent("안녕하세요~ 잘 부탁드려요!");
 		
-		repository.save(board);  //board 객체 저장*/
+		repository.save(board);  //board 객체 저장
 		
 		/*Board board = Board.builder()
 				.title("안녕하세요~")
 				.writer("이신입")
 				.content("만나서 반갑습니다..")
 				.build();
-		repository.save(board);*/
-	}
+		repository.save(board);
+	}*/
 	
 	//게시글 수정
 	/*@Test
@@ -54,9 +54,14 @@ public class BoardRepositoryTest {
 	//게시글 상세 보기(1건 보기)
 	/*@Test
 	public void getBoard() {
-		log.info("=== 2번 게시글 조회 ===");
+		log.info("=== 1번 게시글 조회 ===");
 		Optional<Board> board = repository.findById(2);
-		log.info("--->" + board.toString());
+		if(board.isPresent()) {
+			log.info("--->" + board.toString());
+		}else {
+			log.info("--->" + "해당 게시글이 존재하지 않습니다.");
+		}
+		
 	}*/
 	
 	//게시글 삭제
@@ -67,7 +72,7 @@ public class BoardRepositoryTest {
 	}*/
 	
 	//게시글 목록
-	@Test
+	/*@Test
 	public void getBoardList() {
 		List<Board> boardList = repository.findAll();
 		
@@ -75,7 +80,7 @@ public class BoardRepositoryTest {
 			//System.out.println(board.toString());
 			log.info("--->" + board.toString());
 		}
-	}
+	}*/
 	
 	
 }
