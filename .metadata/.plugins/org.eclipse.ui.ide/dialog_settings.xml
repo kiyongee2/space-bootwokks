@@ -58,6 +58,7 @@
 		<item key="SmartImportRootWizardPage.STORE_NESTED_PROJECTS" value="true"/>
 		<item key="SmartImportRootWizardPage.STORE_CONFIGURE_NATURES" value="true"/>
 		<list key="org.eclipse.ui.internal.wizards.datatransfer.SmartImportRootWizardPage.knownSources">
+			<item value="C:\DEV\bootworks2\rest_api"/>
 			<item value="C:\DEV\bootworks2\Spring-JPA2"/>
 			<item value="C:\DEV\bootworks2\Test10-KANG_TAESUNG-\TestKTS"/>
 			<item value="C:\DEV\bootworks2\Test_10_GiyongKim"/>
