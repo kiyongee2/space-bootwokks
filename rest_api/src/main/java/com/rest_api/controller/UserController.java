@@ -17,7 +17,9 @@ import com.rest_api.service.UserService;
 
 import lombok.RequiredArgsConstructor;
 
-@CrossOrigin(origins = "http://localhost:3000") //리엑트의 포트를 설정
+//@CrossOrigin - 웹 브라우저의 보안정책으로 제한되는 도메인(출처)를 
+//허용하도록 서버에 지시하는 인터페이스
+@CrossOrigin(origins = "http://localhost:3000") //리엑트의 포트 기록
 @RequiredArgsConstructor
 @RequestMapping("/users")
 @RestController
